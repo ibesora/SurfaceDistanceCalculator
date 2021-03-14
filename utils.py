@@ -7,13 +7,12 @@ CellEdges = Enum('CellEdges', 'Top Bottom Left Right Diagonal')
 
 class Line:
   def __init__(self, start, end, name):
-    self.vertices = [start, end]
     self.geom = LineString([start, end])
     self.name = name
   def __str__(self):
     return str((self.name, str(self.geom)))
   def getVertices(self):
-    return self.vertices
+    return [self.geom.coords[0], self.geom.coords[1]]
   def getGeom(self):
     return self.geom
   def getName(self):

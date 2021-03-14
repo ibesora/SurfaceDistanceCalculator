@@ -16,7 +16,9 @@ def columnDistance(line, data, metersPerPixel, metersPerHeightValue):
 def axisAlignedDistance(line, data, index, metersPerPixel, metersPerHeightValue):
   start = line.getStart()
   end = line.getEnd()
-  steps = int(end[index]) - int(start[index]) + 1
+  steps = abs(int(end[index]) - int(start[index])) + 1
+  direction = 1 if end[index] > start[index] else -1
+  print("Steps", steps)
   stepsInfo = []
   
   stepsInfo.append(buildStepData(0, getMeters(int(start[0]), int(start[1]), data, metersPerHeightValue), 0, 0, 0))
@@ -28,10 +30,10 @@ def axisAlignedDistance(line, data, index, metersPerPixel, metersPerHeightValue)
     stepDist = metersPerPixel
     if (index == 0):
       # Traversing columns
-      stepHeight = getMeters(int(start[0]) + i, int(start[1]), data, metersPerHeightValue)
+      stepHeight = getMeters(int(start[0]) + i * direction, int(start[1]), data, metersPerHeightValue)
     else:
       # Traversing rows
-      stepHeight = getMeters(int(start[0]), int(start[1]) + i, data, metersPerHeightValue)
+      stepHeight = getMeters(int(start[0]), int(start[1]) + i * direction, data, metersPerHeightValue)
     stepAccumDist = prevAccum + metersPerPixel
     stepSurfaceDist = surfaceDistance(stepDist, stepHeight - prevHeight)
     stepsInfo.append(buildStepData(stepDist, stepHeight, stepAccumDist, stepSurfaceDist, prevAccumSD + stepSurfaceDist))
