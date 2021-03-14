@@ -55,6 +55,25 @@ def nonAxisAlignedDistance(path, data, metersPerPixel, metersPerHeightValue):
   currentCell = [start[0], start[1]]
   stepsInfo = []
   lastIntersectingPoint = start
+
+  # As we are taking the top left vertex as the cell index we need to account for some special cases:
+  if (quadrant == Quadrants.Second):
+    # When the traversal goes by the second quadrant we need to account for the fact that the cell
+    # containing the ending point must also be included in the computation and that the cell
+    # containing the starting point is the upper-left neighbor cell of the one indexed by that
+    # point
+    end = [end[0] - 1, end[1] - 1]
+    currentCell = [currentCell[0] - 1, currentCell[1] - 1]
+  elif (quadrant == Quadrants.First):
+    # The last cell is the one containing the ending point which is the left neighbor of the
+    # one indexed by that point
+    # The starting cell is the one containing the starting point which is the upper neighbor
+    # of the cell indexed by that point
+    end = [end[0] - 1, end[1]]
+    currentCell = [currentCell[0], currentCell[1] - 1]
+  elif (quadrant == Quadrants.Third):
+    end = [end[0], end[1] -1]
+    currentCell = [currentCell[0] - 1, currentCell[1]]
       
   stepsInfo.append(buildStepData(0, getMeters(int(start[0]), int(start[1]), data, metersPerHeightValue), 0, 0, 0))
   while currentCell[0] != end[0] or currentCell[1] != end[1]:
