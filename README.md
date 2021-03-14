@@ -7,7 +7,7 @@ Python 3.8
 ## Installation
 1. Create a virtual environment via `python -m venv surf_dist`
 2. Activate the virtual environment with `source surf_dist/bin/activate`
-3. Install the needed packages via `pip install numpy argparse`
+3. Install the needed packages via `pip install numpy argparse shapely`
 
 ## Running
 You can run the code via `python surf_dist.py -startX 0 -startY 0 -endX 511 -endY 511`

@@ -1,5 +1,6 @@
 from argparse import ArgumentParser
 import numpy as np
+from calculator import computeSurfaceDistance
 
 DefaultPreFilePath = 'data/pre.data'
 DefaultPostFilePath = 'data/post.data'
@@ -53,11 +54,14 @@ def main() -> int:
     
     resultsPre = computeSurfaceDistance(startPoint, endPoint, rawDataPre, metersPerPixel, metersPerHeightValue)
     resultsPost = computeSurfaceDistance(startPoint, endPoint, rawDataPost, metersPerPixel, metersPerHeightValue)
-    surfaceDistPre = resultsPre[len(resultsPre) - 1]["accumSurfaceDistance"]
-    surfaceDistPost = resultsPost[len(resultsPost) - 1]["accumSurfaceDistance"]
-    print("Distance (m) pre eruption:", surfaceDistPre)
-    print("Distance (m) post eruption:", surfaceDistPost)
-    print("Difference (m):", surfaceDistPre - surfaceDistPost)   
+    if (len(resultsPre) > 0 and len(resultsPost) > 0):
+      surfaceDistPre = resultsPre[len(resultsPre) - 1]["accumSurfaceDistance"]
+      surfaceDistPost = resultsPost[len(resultsPost) - 1]["accumSurfaceDistance"]
+      print("Distance (m) pre eruption:", surfaceDistPre)
+      print("Distance (m) post eruption:", surfaceDistPost)
+      print("Difference (m):", surfaceDistPre - surfaceDistPost)   
+    else:
+      print("Not yet implemented")
 
 if __name__ == '__main__':
     exit(main())
